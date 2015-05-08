@@ -1,0 +1,35 @@
+User
+  user_name
+  password
+  level: double
+  birthday: datetime
+  real_name
+  address
+  email
+  gender
+
+Post
+  forum_name
+  title
+  content: text
+  date: datetime
+  top: boolean
+  important: boolean
+  poster
+
+Comment
+  post_id
+  date: datetime
+  content: text
+  commenter
+
+Follow
+  follower_name
+  leader_name
+
+Forum
+  forum_name
+  description: text
+  admin_user
+
+

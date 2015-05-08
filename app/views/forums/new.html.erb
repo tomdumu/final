@@ -1,0 +1,13 @@
+<style>
+  label { width: 100px; vertical-align: middle;}
+</style>
+
+<h2>Add a New Forum</h2>
+
+<%= form_tag forums_url, :method => 'post' do %>
+  <p><label>Forum name:</label> <input name="forum_name" size="30"></p>
+  <p><label>Description:</label></p>
+  <textarea name="description" cols="80" rows="3"></textarea>
+  <p><label>Admin User:</label> <input name="admin_user" size="80"></p>
+  <p><button>Submit</button></p>
+<% end %>

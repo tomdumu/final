@@ -1,0 +1,15 @@
+<html>
+  <p><%= link_to "Add a New Forum", forums_new_url %></p>
+
+<ul>
+
+  <% @forums.each do |forum| %>
+    <li>
+      <%= link_to forum.forum_name, forum_url(forum.id) %>
+      <%= forum.description %>
+      <%= link_to "(delete)", forum_url(forum.id), :method => 'delete' %>
+    </li>
+  <% end %>
+
+</ul>
+</html>

@@ -1,0 +1,11 @@
+<style>
+  label { width: 100px; vertical-align: middle;}
+</style>
+
+<%= form_tag forum_url(@forum.id), :method => 'patch' do %>
+  <p><label>Forum name:</label> <input name="forum_name" size="30" value="<%= @forum.forum_name %>"></p>
+  <p><label>Description:</label></p>
+  <textarea name="description" cols="80" rows="3"><%= @forum.description %></textarea>
+  <p><label>Admin User:</label> <input name="admin_user" size="80" value="<%= @forum.admin_user %>"></p>
+  <p><button>Submit</button></p>
+<% end %>
