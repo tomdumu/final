@@ -1,12 +1,3 @@
 == README
 
 This version implements most of the functions.
-
-User: create, edit, show, delete
-Forum: create, edit, show, delete
-Post: create, edit, show, delete
-Comment: create, edit, show, delete
-
-However, Watch, Like and Follow are not fully implemented(only show are implemented). I will finish those functions later.
-
-<tt>rake doc:app</tt>.
