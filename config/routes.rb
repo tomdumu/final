@@ -45,9 +45,11 @@ Rails.application.routes.draw do
   patch '/comments/:id' => 'comments#update'
   delete '/comments/:id' => 'comments#destroy'
 
-  ##### Watch
-  get '/watches/:user_id' => 'watches#index', :as => 'watches'
-  post '/users/:user_id/watches/:forum_id' => 'watches#create', :as => 'watch' 
-
-  delete '/users/:user_id/watches/:forum_id' => 'watches#destroy'
+  
+  post '/watches/:id' => 'watches#create', :as => 'watch'
+  delete '/watches/:id' => 'watches#destroy'
+  post '/likes/:id' => 'likes#create', :as => 'like'
+  delete '/likes/:id' => 'likes#destroy'
+  post '/follows/:id' => 'follows#create', :as => 'follow'
+  delete '/follows/:id' => 'follows#destroy'
 end

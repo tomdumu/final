@@ -3,12 +3,15 @@
   <div class="panel-heading">
     <h3 class="panel-title"><%= @post.title %>
       <div class="pull-right">
-        <% if !session[:user_id].nil? && (session[:user_id] == @post.poster_id || session[:user_id] == Forum.find_by_id(@post.forum_id).admin_id ) %>
+        <% if !session[:user_id].nil? %>
+
         <% if Like.where(user_id: session[:user_id]).pluck(:post_id).include? @post.id %>
           <%= link_to "Unlike", "#", :style => "margin-right:10px;color:red;" %>
           <% else %>
           <%= link_to "Like", "#", :style => "margin-right:10px;" %>
           <% end %>
+        <% end %>
+        <% if !session[:user_id].nil? && (session[:user_id] == @post.poster_id || session[:user_id] == Forum.find_by_id(@post.forum_id).admin_id ) %>
           <%= link_to "Edit", post_edit_url(@post.id), :style => "margin-right:10px;" %>
           <%= link_to "Delete", post_url(@post.id), :method => 'delete' %>
         <% end %>

@@ -18,9 +18,15 @@
 <% end %>
     <large class="panel-title"><%= @forum.forum_name %></large>
           <% if Watch.where(user_id: session[:user_id]).pluck(:forum_id).include? @forum.id %>
-          <%= link_to "UnWatch", "#", :class => "label label-danger pull-right" %>
+            <%= form_tag  watch_url(@forum.id), method: "delete", :class => "form pull-right" do%>
+              <input type="hidden" name="url" value=<%= request.url %>>
+            <%= submit_tag "Unwatch", :class=>"btn btn-sm btn-danger pull-right"%>
+          <% end %>
           <% else %>
-          <%= link_to "Watch", "#", :class => "label label-primary pull-right" %>          
+            <%= form_tag  watch_url(@forum.id), method: "post", :class => "form pull-right" do%>
+              <input type="hidden" name="url" value=<%= request.url %>>
+            <%= submit_tag "Watch", :class=>"btn btn-sm btn-primary pull-right"%>
+          <% end %>          
           <% end %>
   </div>
   <div class="panel-body">
@@ -56,6 +62,17 @@
                 <td><%= link_to User.find_by_id(post.poster_id).user_name, user_url(post.poster_id) %></td>
                 <td><%= post.date %></td>
                 <td><%= Comment.where(post_id: post.id).count %></td>
+              <td><% if Like.where(user_id: session[:user_id]).pluck(:post_id).include? post.id %>
+                <%= form_tag  like_url(post.id), method: "delete", :class => "form pull-right" do%>
+              <input type="hidden" name="url" value=<%= request.url %>>
+              <%= submit_tag "Unlike", :class=>"btn btn-sm btn-danger pull-right"%>
+            <% end %> 
+          <% else %>
+                <%= form_tag  like_url(post.id), method: "post", :class => "form pull-right" do%>
+              <input type="hidden" name="url" value=<%= request.url %>>
+              <%= submit_tag "Like", :class=>"btn btn-sm btn-primary pull-right"%>
+            <% end %>  
+          <% end %></td>
               </tr>
   <% end %>
             </tbody>

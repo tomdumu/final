@@ -15,6 +15,19 @@
             <td><%= user.real_name %></td>
             <td><%= user.gender %></td>
             <td><%= Follow.where(leader_id: user.id).count %></td>
+            <td>
+            <% if Follow.where(follower_id: session[:user_id]).pluck(:leader_id).include? user.id %>
+            <%= form_tag follow_url(user.id), method: "delete", :class => "form pull-right" do%>
+              <input type="hidden" name="url" value=<%= request.url %>>
+              <%= submit_tag "Unfollow", :class=>"btn btn-sm btn-danger pull-right"%>
+            <% end %> 
+          <% else %>
+                <%= form_tag follow_url(user.id), method: "post", :class => "form pull-right" do%>
+              <input type="hidden" name="url" value=<%= request.url %>>
+              <%= submit_tag "Follow", :class=>"btn btn-sm btn-primary pull-right"%>
+            <% end %>      
+          <% end %>
+        </td>
           </tr>
       <% end %>
     </tbody>
