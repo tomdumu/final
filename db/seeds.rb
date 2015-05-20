@@ -14,9 +14,9 @@ User.delete_all
 Like.delete_all
 Watch.delete_all
 
-User.create(user_name: 'Shadow Fiend', password: '1', level: 0, birthday: '1991-06-16', real_name: 'Jiaming Dong', address: '6027 S.Ingleside Ave', email: 'jiamingd@uchicago.edu', gender: 'Male')
-User.create(user_name: 'Karin', password: '2', level: 0, birthday: '1980-06-16', real_name: 'Karin', address: '5555 Young Memorial Building', email: 'karin@cs.uchicago.edu', gender: 'Female')
-User.create(user_name: 'God Liang', password: '3', level: 1, birthday: '1990-11-16', real_name: 'Junchi Liang', address: '5304 Dorchester', email: 'jcliang@uchicago.edu', gender: 'Unknown')
+User.create(user_name: 'E', password: 'x', level: 0, birthday: '1992-03-15', real_name: 'Mu Du', address: '5323 S.Ellis', email: 'MuDu@cs.uchicago.edu', gender: 'Male')
+User.create(user_name: 'Shadow Fiend', password: 'y', level: 0, birthday: '1991-06-16', real_name: 'Jiaming Dong', address: '6027 S.Ingleside Ave', email: 'jiamingd@uchicago.edu', gender: 'Male')
+User.create(user_name: 'God Liang', password: 'z', level: 1, birthday: '1990-11-16', real_name: 'Junchi Liang', address: '5304 Dorchester', email: 'jcliang@uchicago.edu', gender: 'Female')
 
 Forum.create(forum_name: 'Academy', description: 'A forum allowing you to post acadamy-related questions and discussions', admin_id: 3)
 Forum.create(forum_name: 'Job Board', description: 'New Jobs will be posted here.', admin_id: 2)
@@ -29,7 +29,7 @@ Post.create(forum_id: 2, title: 'A new job for software engineering', content: '
 
 Comment.create(post_id: 1, date: '2015-05-04 09:10:11', content: 'Great! That\'s wonderful!!!', commenter_id: 2)
 Comment.create(post_id: 2, date: '2015-05-04 08:10:11', content: 'I\'d like to be your teammate', commenter_id: 2)
-Comment.create(post_id: 2, date: '2015-05-04 08:20:11', content: 'Reply to Karin: It\'s too late but thanks all the ways', commenter_id: 1)
+Comment.create(post_id: 2, date: '2015-05-04 08:20:11', content: 'It\'s too late but thanks all the ways', commenter_id: 1)
 
 Follow.create(follower_id: 1, leader_id: 2)
 Follow.create(follower_id: 2, leader_id: 3)
@@ -43,3 +43,4 @@ Like.create(user_id: 3, post_id: 1)
 Watch.create(user_id: 3, forum_id: 1)
 Watch.create(user_id: 3, forum_id: 2)
 Watch.create(user_id: 2, forum_id: 2)
+Watch.create(user_id: 1, forum_id: 2)
