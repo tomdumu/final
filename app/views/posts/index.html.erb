@@ -1,7 +1,3 @@
-<% if session[:user_id].nil?%>
-  <script language="JavaScript">alert("Please log in first")</script>
-  <script type='text/javascript'>window.location.href= '<%= root_url %>'</script>
-<% end %> 
 <% if !session[:user_id].nil? %>
   <%= form_tag posts_url, method: "get", :class=>"form", :role=>"form" do %>
     <div class="row">
