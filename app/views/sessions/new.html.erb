@@ -1,0 +1,16 @@
+<h3>Sign In</h3>
+
+<%= form_tag "/sessions" do %>
+
+  <p>
+    <%= label_tag :user_name %>
+    <%= text_field_tag :user_name %>
+  </p>
+
+  <p>
+    <%= label_tag :password %>
+    <input id="password" type="password" name="password">
+  </p>
+
+  <%= submit_tag "Let Me In!" %>
+<% end %>

@@ -9,27 +9,34 @@ User
   gender
 
 Post
-  forum_name
+  forum_id: integer
   title
   content: text
   date: datetime
   top: boolean
   important: boolean
-  poster
+  poster_id: integer
 
 Comment
-  post_id
+  post_id: integer
   date: datetime
   content: text
-  commenter
+  commenter_id: integer
 
 Follow
-  follower_name
-  leader_name
+  follower_id: integer
+  leader_id: integer
 
 Forum
   forum_name
   description: text
-  admin_user
+  admin_id: integer
 
+Watch
+  user_id: integer
+  forum_id: integer
+
+Like
+  user_id: integer
+  post_id: integet
 

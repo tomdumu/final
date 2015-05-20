@@ -1,0 +1,31 @@
+<h3>Sign Up</h3>
+<% if @user.errors.any? %>
+  <ul class="errors">
+      <div class="alert alert-info"%>
+    <% @user.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+      </div>
+  </ul>
+<% end %>
+
+<div class="container">
+<%= form_tag users_url, :method => 'post', :class=>"form", :role=>"form" do %>
+  <label>Username:</label>
+  <input class="form-control" type="text" name="user_name" placeholder="username">
+  <label>password:</label>
+  <input class="form-control" type="password" name="password" placeholder="password">
+  <label>Email:</label>
+  <input class="form-control" type="email" name="email" placeholder="email">
+  <label>Real name:</label>
+  <input class="form-control" type="text" name="real_name" placeholder="real name">
+  <label>Address:</label>
+  <input class="form-control" type="text" name="address" placeholder="address">
+  <label>Birthday:</label>
+  <input type="date" class="form-control", name="date">
+  <label>Gender:</label><p>
+  <input type="radio" name="gender" value="male" > Male
+  <input type="radio" name="gender" value="female"> Female<br><br>
+  <input type="submit" class="btn btn-primary" value="register">
+<% end %>
+</div>

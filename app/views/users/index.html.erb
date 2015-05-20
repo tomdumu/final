@@ -1,0 +1,26 @@
+<% if session[:user_id].nil?%>
+  <script language="JavaScript">alert("Please log in first")</script>
+  <script type='text/javascript'>window.location.href= '<%= root_url %>'</script>
+<% end %> 
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Username</th>
+        <th>Real name</th>
+        <th>Gender</th>
+        <th><small>Followers</small></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% if !@users.nil? %>
+        <% @users.each do |user| %>
+          <tr>
+            <td><%= link_to user.user_name, user_url(user.id) %></td>
+            <td><%= user.real_name %></td>
+            <td><%= user.gender %></td>
+            <td><%= Follow.where(leader_id: user.id).count %></td>
+          </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>

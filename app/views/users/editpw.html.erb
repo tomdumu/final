@@ -1,0 +1,26 @@
+<style>
+  label { width: 100px; vertical-align: middle;}
+</style>
+<% if session[:user_id].nil?%>
+  <script language="JavaScript">alert("Please log in first")</script>
+  <script type='text/javascript'>window.location.href= '<%= root_url %>'</script>
+<% end %> 
+<% if session[:user_id] != @user.id %>
+  <script language="JavaScript">alert("No permission!")</script>
+  <script type='text/javascript'>window.location.href= '<%= root_url %>'</script>
+<% end %>
+<h2>Change Password</h2>
+<div class="container">
+<%= form_tag user_url(@user.id), :method => 'patch', :class=>"form", :role=>"form" do %>
+  <label>New password:</label>
+  <input class="form-control" type="password" name="pw1" placeholder="password">
+  <label>Re-enter:</label>
+  <input class="form-control" type="password" name="pw2" placeholder="Re-enter">
+  <input type="hidden" name="email" value='<%= @user.email %>'>
+  <input type="hidden" name="real_name" value='<%= @user.real_name %>'>
+  <input type="hidden" name="address" placeholder="address" value='<%= @user.address %>'>
+  <input type="hidden" name="birthday" value='<%= @user.birthday.to_date %>'>
+  <br>
+  <input type="submit" class="btn btn-primary" value="Submit">
+<% end %>
+</div>

@@ -1,0 +1,39 @@
+<% if session[:user_id].nil?%>
+  <script language="JavaScript">alert("Please log in first")</script>
+  <script type='text/javascript'>window.location.href= '<%= root_url %>'</script>
+<% end %> 
+<% if !session[:user_id].nil? %>
+  <%= form_tag posts_url, method: "get", :class=>"form", :role=>"form" do %>
+    <div class="row">
+    <div class="col-sm-10">
+    <input type="text" class="form-control" placeholder="Post key word" name="search">
+  </div>
+  <div class="col-sm-2", align ="right" >
+    <%= submit_tag "Search", :class=>"btn btn-success"%>
+  </div>
+  </div>
+  <% end %>
+<% end %>
+  <br>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Post Title</th>
+        <th>Poster</th>
+        <th>Time</th>
+        <th><small>Comments</small></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% if !@posts.nil? %>
+        <% @posts.each do |post| %>
+          <tr>
+            <td><%= link_to post.title, post_url(post.id) %></td>
+            <td><%= link_to User.find_by_id(post.poster_id).user_name, user_url(post.poster_id) %></td>
+            <td><%= post.date %></td>
+            <td><%= Comment.where(post_id: post.id).count %></td>
+          </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>

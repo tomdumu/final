@@ -1,13 +1,27 @@
 <style>
   label { width: 100px; vertical-align: middle;}
 </style>
+<% if session[:user_id].nil?%>
+  <script language="JavaScript">alert("Please log in first")</script>
+  <script type='text/javascript'>window.location.href= '<%= root_url %>'</script>
+<% end %> 
+<h2 align="middle">Add a New Forum</h2>
 
-<h2>Add a New Forum</h2>
-
-<%= form_tag forums_url, :method => 'post' do %>
-  <p><label>Forum name:</label> <input name="forum_name" size="30"></p>
-  <p><label>Description:</label></p>
-  <textarea name="description" cols="80" rows="3"></textarea>
-  <p><label>Admin User:</label> <input name="admin_user" size="80"></p>
-  <p><button>Submit</button></p>
+<% if @forum.errors.any? %>
+  <ul class="errors">
+    <% @forum.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+  </ul>
 <% end %>
+
+<div class="container">
+<%= form_tag forums_url, :method => 'post', :class=>"form", :role=>"form" do %>
+  <label>Forum name:</label>
+  <input class="form-control" type="text" name="forum_name" placeholder="forum name">
+  <label>Description:</label>
+  <textarea class="form-control" cols="80" name="description"></textarea>
+  <br>
+  <input type="submit" class="btn btn-primary" value="Submit">
+<% end %>
+</div>

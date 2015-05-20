@@ -1,7 +1,80 @@
-<%= link_to "Edit", forum_edit_url(@forum.id) %>
-<h2 style="color:red;">Name:<h2>
-<p><%= @forum.forum_name %><p>
-<h2 style="color:red;">Description:<h2>
-<p><%= @forum.description %><p>
-<h2 style="color:red;">Administrator:<h2>
-<p><%= @forum.admin_user %><p>
+
+<%= form_tag posts_url, method: "get", :class=>"form", :role=>"form" do %>
+    <div class="row">
+    <div class="col-sm-10">
+    <input type="text" class="form-control" placeholder="Post key word" name="search">
+  </div>
+  <div class="col-sm-2", align ="right" >
+    <%= submit_tag "Search", :class=>"btn btn-success"%>
+  </div>
+  </div>
+  <% end %>
+  <br>
+<div class="panel panel-default">
+  <div class="panel-heading" align="middle">
+    <% if !session[:user_id].nil? && @forum.present? && session[:user_id] == @forum.admin_id %>
+<%= link_to "Edit", forum_edit_url(@forum.id), :class => "pull-left", :style => "margin-right:8px;"%>
+<%= link_to "Delete", forum_url(@forum.id), :method => 'delete', :class => "pull-left" %>
+<% end %>
+    <large class="panel-title"><%= @forum.forum_name %></large>
+          <% if Watch.where(user_id: session[:user_id]).pluck(:forum_id).include? @forum.id %>
+          <%= link_to "UnWatch", "#", :class => "label label-danger pull-right" %>
+          <% else %>
+          <%= link_to "Watch", "#", :class => "label label-primary pull-right" %>          
+          <% end %>
+  </div>
+  <div class="panel-body">
+    <%= @forum.description %>
+  </div>
+  <hr>
+  <div class="row" align="middle">
+    <div class="col-sm-4">
+      <label align="middle">Number of Watchers: <%= Watch.where(forum_id: @forum.id).count %></label>
+    </div>
+    <div class="col-sm-4">
+      <label align="middle">Number of Posts: <%= Post.where(forum_id: @forum.id).count %></label>
+    </div>
+    <div class="col-sm-4">
+      <label align="middle">Administrator: <%= link_to User.find_by_id(@forum.admin_id).user_name, user_url(@forum.admin_id) %></label>
+    </div>
+  </div>
+</div>
+  <table class="table">
+            <thead>
+              <tr>
+                <th>Post Title</th>
+                <th>Poster</th>
+                <th>Time</th>
+                <th><small>Comments</small></th>
+              </tr>
+            </thead>
+            <tbody>
+  <% if !@posts.nil? %>
+  <% @posts.each do |post| %>
+              <tr>
+                <td><%= link_to post.title, post_url(post.id) %></td>
+                <td><%= link_to User.find_by_id(post.poster_id).user_name, user_url(post.poster_id) %></td>
+                <td><%= post.date %></td>
+                <td><%= Comment.where(post_id: post.id).count %></td>
+              </tr>
+  <% end %>
+            </tbody>
+          </table>
+  <% end %>
+<hr>
+<%if !session[:user_id].nil? %>
+<div class="container">
+<h2 align="middle">Create new Post</h2>
+<%= form_tag posts_url, :method => 'post', :class=>"form", :role=>"form" do %>
+  <label>Title:</label>
+  <input class="form-control" type="text" name="title" placeholder="Title">
+  <label>Content:</label>
+  <textarea class="form-control" cols="80" name="content"></textarea>
+  <br>
+  <input name="top" type="hidden" value="false"></input>
+  <input name="important" type="hidden" value="false"></input>
+  <input name="forum_id" type="hidden" value=<%= @forum.id %>></input>
+  <input type="submit" class="btn btn-primary" value="Submit">
+<% end %>
+</div>
+<% end %>

@@ -1,15 +1,52 @@
 <html>
-  <p><%= link_to "Add a New Forum", forums_new_url %></p>
-
-<ul>
-
+<% if !session[:user_id].nil? %>
+  <h1 align="middle"><%= link_to "I want to create a forum!", forums_new_url %></h1>
+  <%= form_tag forums_url, method: "get", :class=>"form", :role=>"form" do %>
+    <div class="row">
+    <div class="col-sm-10">
+    <input type="text" class="form-control" placeholder="Forum key word" name="search">
+  </div>
+  <div class="col-sm-2", align ="right" >
+    <%= submit_tag "Search", :class=>"btn btn-success"%>
+  </div>
+  </div>
+  <% end %>
+  <br>
+  <%= form_tag posts_url, method: "get", :class=>"form", :role=>"form" do %>
+    <div class="row">
+    <div class="col-sm-10">
+    <input type="text" class="form-control" placeholder="Post key word" name="search">
+  </div>
+  <div class="col-sm-2", align ="right" >
+    <%= submit_tag "Search", :class=>"btn btn-success"%>
+  </div>
+  </div>
+  <% end %>
+<% end %>
+  <br>
   <% @forums.each do |forum| %>
-    <li>
-      <%= link_to forum.forum_name, forum_url(forum.id) %>
-      <%= forum.description %>
-      <%= link_to "(delete)", forum_url(forum.id), :method => 'delete' %>
-    </li>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <%= link_to forum.forum_name, forum_url(forum.id)%>
+      <label class="pull-right">Admin User: <%= link_to User.find_by_id(forum.admin_id).user_name, user_url(forum.admin_id) %></label>
+    </div>
+    <div class="panel-body">
+      <div class="row">
+      	<div class="col-sm-11">
+    	    <%= forum.description %>
+        </div>
+        <% if !session[:user_id].nil? %>
+      	<div class="col-sm-1">
+          <% if Watch.where(user_id: session[:user_id]).pluck(:forum_id).include? forum.id %>
+          <%= link_to "UnWatch", "#", :class => "label label-danger" %>
+          <% else %>
+          <%= link_to "Watch", "#", :class => "label label-primary" %>          
+          <% end %>
+        </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
   <% end %>
 
-</ul>
 </html>

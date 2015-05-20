@@ -5,17 +5,15 @@
   <script language="JavaScript">alert("Please log in first")</script>
   <script type='text/javascript'>window.location.href= '<%= root_url %>'</script>
 <% end %> 
-<% if session[:user_id] != @forum.admin_id %>
+<% if session[:user_id] != @comment.commenter_id && session[:user_id] != Forum.find_by_id(Post.find_by_id(@comment.post_id).forum_id).admin_id  %>
   <script language="JavaScript">alert("No permission!")</script>
   <script type='text/javascript'>window.location.href= '<%= root_url %>'</script>
 <% end %>
-<h2>Edit your Forum:</h2>
+<h2>Edit your Comment:</h2>
 <div class="container">
-<%= form_tag forum_url(@forum.id), :method => 'patch', :class=>"form", :role=>"form" do %>
-  <label>Forum name:</label>
-  <input class="form-control" type="text" name="forum_name" placeholder="forum_name" value="<%= @forum.forum_name %>">
-  <label>Description:</label>
-  <textarea class="form-control" name="description"><%= @forum.description %></textarea>
+<%= form_tag comment_url(params[:id]), :method => 'patch', :class=>"form", :role=>"form" do %>
+  <label>Content</label>
+  <textarea class="form-control" name="content"><%= @comment.content %></textarea>
   <br>
   <input type="submit" class="btn btn-primary" value="Submit">
 <% end %>

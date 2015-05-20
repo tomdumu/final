@@ -1,0 +1,67 @@
+
+<div class="panel panel-info">
+  <div class="panel-heading">
+    <h3 class="panel-title"><%= @post.title %>
+      <div class="pull-right">
+        <% if !session[:user_id].nil? && (session[:user_id] == @post.poster_id || session[:user_id] == Forum.find_by_id(@post.forum_id).admin_id ) %>
+        <% if Like.where(user_id: session[:user_id]).pluck(:post_id).include? @post.id %>
+          <%= link_to "Unlike", "#", :style => "margin-right:10px;color:red;" %>
+          <% else %>
+          <%= link_to "Like", "#", :style => "margin-right:10px;" %>
+          <% end %>
+          <%= link_to "Edit", post_edit_url(@post.id), :style => "margin-right:10px;" %>
+          <%= link_to "Delete", post_url(@post.id), :method => 'delete' %>
+        <% end %>
+      </div>
+    </h3>
+  </div>
+  <div class="panel-body">
+    <div class="row">
+      <div class="col-sm-2">
+        <p><%= link_to User.find_by_id(@post.poster_id).user_name, user_url(@post.poster_id) %><p>
+        <label>Level: <%= User.find_by_id(@post.poster_id).level.to_i %></label>
+      </div>
+      <div class="col-sm-10">
+        <p><%= @post.content %><p>
+        <small class="pull-right"><%= @post.date %></small>
+      </div>
+    </div>
+  </div>  
+  <% if !@comments.nil? %>
+    <% @comments.each do |comment| %>
+    <div class="panel-body">
+    <hr>
+    <div class="row">
+      <div class="col-sm-2">
+        <p><%= link_to User.find_by_id(comment.commenter_id).user_name, user_url(comment.commenter_id) %><p>
+        <label>Level: <%= User.find_by_id(comment.commenter_id).level.to_i %></label>
+      </div>
+      <div class="col-sm-10">
+        <div class="pull-right">
+          <% if session[:user_id].present? && (session[:user_id] == comment.commenter_id || session[:user_id] == Forum.find_by_id(Post.find_by_id(comment.post_id).forum_id).admin_id) %>
+            <%= link_to "Edit", comment_edit_url(comment.id), :style => "margin-right:10px;" %>
+            <%= link_to "Delete", comment_url(comment.id), method: "delete"%>
+          <% end %>
+        </div>
+        <br>
+        <p><%= comment.content %><p>
+        <small class="pull-right"><%= comment.date %></small>
+      </div>
+    </div>
+    </div>  
+
+  <% end %>
+  <% end %>
+</div>
+<%if !session[:user_id].nil? %>
+<div class="container">
+<h2 align="middle">Comment this Post</h2>
+<%= form_tag comments_url, :method => 'post', :class=>"form", :role=>"form" do %>
+  <label>Content:</label>
+  <textarea class="form-control" cols="80" name="content"></textarea>
+  <input type="hidden" name="post_id", value=<%= @post.id %>></input>
+  <br>
+  <input type="submit" class="btn btn-primary" value="Submit">
+<% end %>
+</div>
+<% end %>
