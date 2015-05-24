@@ -7,10 +7,12 @@ User
   address
   email
   gender
+  avatar
 
 Post
   forum_id: integer
   title
+  level: integer
   content: text
   date: datetime
   top: boolean

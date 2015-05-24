@@ -15,10 +15,7 @@ Rails.application.routes.draw do
   ##### Sign Up and Sign In and Sign Out
   get '/signup' => 'users#new'
   post '/users' => 'users#create'
-  post '/sessions' => 'sessions#create'
 
-  ##### Page for a new session (login)
-  get '/signin' => 'sessions#new' 
   ##### Create a new session
   post '/sessions' => 'sessions#create'
   ##### Delete a session (signout)

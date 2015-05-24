@@ -2,7 +2,7 @@
   <%= form_tag posts_url, method: "get", :class=>"form", :role=>"form" do %>
     <div class="row">
     <div class="col-sm-10">
-    <input type="text" class="form-control" placeholder="Post key word" name="search">
+    <input type="text" class="form-control" placeholder="Search All Posts" name="search">
   </div>
   <div class="col-sm-2", align ="right" >
     <%= submit_tag "Search", :class=>"btn btn-success"%>
@@ -11,6 +11,12 @@
   <% end %>
 <% end %>
   <br>
+
+      <tr>
+                <th><button class="btn-link" id="all">All Posts</button></th>
+                <th><button class="btn-link" id="important">Important Posts</button></th>
+              </tr>
+
   <table class="table">
     <thead>
       <tr>
@@ -21,10 +27,27 @@
       </tr>
     </thead>
     <tbody>
+      <% $url = request.url
+         if $url.include? "?"
+          $plus = "&"
+         else
+          $plus = "?"
+        end
+
+       %>
       <% if !@posts.nil? %>
-        <% @posts.each do |post| %>
-          <tr>
-            <td><%= link_to post.title, post_url(post.id) %></td>
+        <% (@page.to_i*10..@page.to_i*10+9).each do |i| 
+    post = @posts[i]
+    if post.nil?
+      break
+    end %>
+                <% if post.important == true %>
+                <tr class="important">
+                  <td><%= link_to post.title, post_url(post.id), :style => "color: red;"%></td>
+                <% else %>
+                <tr class="formal">
+                  <td><%= link_to post.title, post_url(post.id) %></td>
+                <% end %>
             <td><%= link_to User.find_by_id(post.poster_id).user_name, user_url(post.poster_id) %></td>
             <td><%= post.date %></td>
             <td><%= Comment.where(post_id: post.id).count %></td>
@@ -45,3 +68,61 @@
     </tbody>
   </table>
 <% end %>
+<div>
+  <nav align="middle">
+  <ul class="pagination">
+    <li>
+      <% if @page == 0 %>
+      <a href="#" aria-label="Previous" style="
+   pointer-events: none;
+   cursor: default;
+   color:grey;">
+      <% else %>
+      <a href="<%= request.url+$plus %>page=<%= @page - 1 %>" aria-label="Previous">
+      <% end %>
+        <span aria-hidden="true">&laquo;</span>
+      </a>
+    </li>
+    <% if @posts.length%10 == 0
+        $count = @posts.length/10
+       else
+        $count = @posts.length/10 + 1
+       end
+       (1..$count).each do |i|
+         %> 
+
+    <li><a href="<%= request.url+$plus %>page=<%= i-1 %>" id="page"><%= i %></a></li>
+    <% end %>
+  <li>
+      <% if @page == $count - 1 %>
+      <a href="#" aria-label="Next" style="
+   pointer-events: none;
+   cursor: default;
+   color:grey;">
+      <% else %>
+      <a href="<%= request.url+$plus %>page=<%= @page + 1 %>" aria-label="Next">
+      <% end %>
+        <span aria-hidden="true">&raquo;</span>
+      </a>
+    </li>
+  </ul>
+</nav>
+</div>
+
+<script>
+
+      $(function(){
+        $('#all').on('click',function(){  
+          $('.formal').show();
+        });
+
+        $('#important').on('click',function(){
+          $('.formal').hide();
+        });
+
+        
+      });
+      
+
+
+    </script>

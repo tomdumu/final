@@ -1,10 +1,8 @@
 class SessionsController < ApplicationController
-
-  def new
-
-  end
-
   def create
+    if(session[:user_id].present?)
+      redirect_to "#", notice: "You've already signed in!"
+    end
     user = User.find_by(user_name: params[:user_name])
     if user
       if user.password == params[:password]

@@ -16,7 +16,48 @@
   <input class="form-control" type="text" name="title" placeholder="title" value='<%= @post.title %>'>
   <label>Real name:</label>
   <textarea class="form-control" name="content"><%= @post.content %></textarea>
+  <p>Minimum level to comment this post:</p>
+  <select class="form-control" name="level" id="level">
+        <option value="0">0</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+        <option value="6">6</option>
+        <option value="7">7</option>
+        <option value="8">8</option>
+        <option value="9">9</option>
+        <option value="10">10</option>
+        <option value="11">11</option>
+        <option value="12">12</option>
+        <option value="13">13</option>
+        <option value="14">14</option>
+        <option value="15">15</option>
+      </select>
+    <script type="text/javascript">
+    document.getElementById("level")[<%= @post.level %>].selected=true;
+    </script>
+  <% if session[:user_id] == Forum.find_by_id(@post.forum_id).admin_id %>
+  <label>Important</label>
+  <% if @post.important == true %>
+  <input type="radio" name="important" value="true" checked="true" > True
+  <input type="radio" name="important" value="false"> False
+  <% else %>
+  <input type="radio" name="important" value="true"> True
+  <input type="radio" name="important" value="false" checked="true" > False
+  <% end %>
   <br>
+  <label>Top</label>
+  <% if @post.top == true %>
+  <input type="radio" name="top" value="true" checked="true" > True
+  <input type="radio" name="top" value="false"> False
+  <% else %>
+  <input type="radio" name="top" value="true"> True
+  <input type="radio" name="top" value="false" checked="true" > False
+  <% end %>
+  <br>
+  <% end %>
   <input type="submit" class="btn btn-primary" value="Submit">
 <% end %>
 </div>

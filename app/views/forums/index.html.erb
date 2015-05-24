@@ -1,6 +1,10 @@
 <html>
 <% if !session[:user_id].nil? %>
-  <h1 align="middle"><%= link_to "I want to create a forum!", forums_new_url %></h1>
+<div class="panel panel-default">
+  <div class="panel-heading" align="middle">
+    <%= link_to "I want to create a forum!", forums_new_url %>
+  </div>
+</div>
   <%= form_tag forums_url, method: "get", :class=>"form", :role=>"form" do %>
     <div class="row">
     <div class="col-sm-10">
@@ -45,8 +49,8 @@
           <% else %>
             <%= form_tag  watch_url(forum.id), method: "post", :class => "form pull-right" do%>
               <input type="hidden" name="url" value=<%= request.url %>>
-            <%= submit_tag "Watch", :class=>"btn btn-sm btn-primary pull-right"%>
-          <% end %>    
+              <%= submit_tag "Watch", :class=>"btn btn-sm btn-primary pull-right"%>
+            <% end %>    
           <% end %>
         </div>
         <% end %>

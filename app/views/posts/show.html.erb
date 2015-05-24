@@ -1,19 +1,30 @@
 
+<div class="panel panel-default">
+  <div class="panel-heading" align="middle">
+    <%= link_to Forum.find_by_id(@post.forum_id).forum_name, forum_url(@post.forum_id) %>
+  </div>
+</div>
 <div class="panel panel-info">
   <div class="panel-heading">
     <h3 class="panel-title"><%= @post.title %>
+
+        <% if !session[:user_id].nil? && (session[:user_id] == @post.poster_id || session[:user_id] == Forum.find_by_id(@post.forum_id).admin_id ) %>
+          <%= link_to "Edit", post_edit_url(@post.id), :style => "margin-right:10px; margin-left:10px;" %>
+          <%= link_to "Delete", post_url(@post.id), :method => 'delete' %>
+        <% end %>
       <div class="pull-right">
         <% if !session[:user_id].nil? %>
-
-        <% if Like.where(user_id: session[:user_id]).pluck(:post_id).include? @post.id %>
-          <%= link_to "Unlike", "#", :style => "margin-right:10px;color:red;" %>
+<% if Like.where(user_id: session[:user_id]).pluck(:post_id).include? @post.id %>
+                <%= form_tag  like_url(@post.id), method: "delete", :class => "form pull-right" do%>
+              <input type="hidden" name="url" value=<%= request.url %>>
+              <%= submit_tag "Unlike", :class=>"btn btn-sm btn-danger pull-right", :style => "position:relative; bottom: 6px;"%>
+            <% end %> 
           <% else %>
-          <%= link_to "Like", "#", :style => "margin-right:10px;" %>
+                <%= form_tag  like_url(@post.id), method: "post", :class => "form pull-right" do%>
+              <input type="hidden" name="url" value=<%= request.url %>>
+              <%= submit_tag "Like", :class=>"btn btn-sm btn-primary pull-right", :style => "position:relative; bottom: 6px;"%>
+            <% end %>  
           <% end %>
-        <% end %>
-        <% if !session[:user_id].nil? && (session[:user_id] == @post.poster_id || session[:user_id] == Forum.find_by_id(@post.forum_id).admin_id ) %>
-          <%= link_to "Edit", post_edit_url(@post.id), :style => "margin-right:10px;" %>
-          <%= link_to "Delete", post_url(@post.id), :method => 'delete' %>
         <% end %>
       </div>
     </h3>
@@ -23,9 +34,14 @@
       <div class="col-sm-2">
         <p><%= link_to User.find_by_id(@post.poster_id).user_name, user_url(@post.poster_id) %><p>
         <label>Level: <%= User.find_by_id(@post.poster_id).level.to_i %></label>
+        <div class="progress">
+    <div class="progress-bar" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width:<%= ((User.find_by_id(@post.poster_id).level - User.find_by_id(@post.poster_id).level.to_i) * 100).to_i%>%">
+      <%= ((User.find_by_id(@post.poster_id).level - User.find_by_id(@post.poster_id).level.to_i) * 100).to_i%>%
+    </div>
+  </div>
       </div>
       <div class="col-sm-10">
-        <p><%= @post.content %><p>
+        <p><%= @post.content %><p><br><br><br>
         <small class="pull-right"><%= @post.date %></small>
       </div>
     </div>
@@ -38,6 +54,11 @@
       <div class="col-sm-2">
         <p><%= link_to User.find_by_id(comment.commenter_id).user_name, user_url(comment.commenter_id) %><p>
         <label>Level: <%= User.find_by_id(comment.commenter_id).level.to_i %></label>
+        <div class="progress">
+    <div class="progress-bar" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width:<%= ((User.find_by_id(comment.commenter_id).level - User.find_by_id(comment.commenter_id).level.to_i) * 100).to_i%>%">
+      <%= ((User.find_by_id(comment.commenter_id).level - User.find_by_id(comment.commenter_id).level.to_i) * 100).to_i%>%
+    </div>
+  </div>
       </div>
       <div class="col-sm-10">
         <div class="pull-right">

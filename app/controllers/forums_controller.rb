@@ -1,7 +1,7 @@
 class ForumsController < ApplicationController
 	def index
     if params[:search].present?
-      @forums = Forum.where("forum_name LIKE '%#{params["search"]}%'")
+      @forums = Forum.where("forum_name LIKE ?", "%#{params["search"]}%")
     elsif params[:user_id].present?
       @forums = Forum.where(admin_id: params[:user_id])
     elsif params[:watch].present?
@@ -14,7 +14,11 @@ class ForumsController < ApplicationController
 
   def show
     @forum = Forum.find(params[:id])
-    @posts = Post.where(forum_id: @forum.id).order('date DESC')
+    @posts = Post.where(forum_id: @forum.id).order(top: :desc).order(date: :desc)
+    @page = params[:page].to_i
+    if @page.nil?
+      @page = 0
+    end
   end
 
   def new

@@ -45,7 +45,11 @@
     </div>
   </div>
 </div>
-  <table class="table">
+      <tr>
+                <th><button class="btn-link" id="all">All Posts</button></th>
+                <th><button class="btn-link" id="important">Important Posts</button></th>
+              </tr>
+  <table class="table" id="MyTable">
             <thead>
               <tr>
                 <th>Post Title</th>
@@ -56,9 +60,26 @@
             </thead>
             <tbody>
   <% if !@posts.nil? %>
-  <% @posts.each do |post| %>
-              <tr>
-                <td><%= link_to post.title, post_url(post.id) %></td>
+  <% (@page.to_i*10..@page.to_i*10+9).each do |i| 
+    post = @posts[i]
+    if post.nil?
+      break
+    end %>
+                <% if post.important == true %>
+                <tr class="important">
+                <% if post.top == true %>
+                  <td><%= link_to post.title+"(top)", post_url(post.id), :style => "color: red;"%></td>
+                  <% else %>
+                  <td><%= link_to post.title, post_url(post.id), :style => "color: red;"%></td>
+                  <% end %>
+                <% else %>
+                <tr class="formal">
+                <% if post.top == true %>
+                  <td><%= link_to post.title+"(top)", post_url(post.id)%></td>
+                  <% else %>
+                  <td><%= link_to post.title, post_url(post.id)%></td>
+                  <% end %>
+                <% end %>
                 <td><%= link_to User.find_by_id(post.poster_id).user_name, user_url(post.poster_id) %></td>
                 <td><%= post.date %></td>
                 <td><%= Comment.where(post_id: post.id).count %></td>
@@ -78,6 +99,46 @@
             </tbody>
           </table>
   <% end %>
+  <div>
+  <nav align="middle">
+  <ul class="pagination">
+    <li>
+      <% if @page == 0 %>
+      <a href="#" aria-label="Previous" style="
+   pointer-events: none;
+   cursor: default;
+   color:grey;">
+      <% else %>
+      <a href="?page=<%= @page - 1 %>" aria-label="Previous">
+      <% end %>
+        <span aria-hidden="true">&laquo;</span>
+      </a>
+    </li>
+    <% if @posts.length%10 == 0
+        $count = @posts.length/10
+       else
+        $count = @posts.length/10 + 1
+       end
+       (1..$count).each do |i|
+         %> 
+
+    <li><a href="?page=<%= i-1 %>" id="page"><%= i %></a></li>
+    <% end %>
+  <li>
+      <% if @page == $count - 1 %>
+      <a href="#" aria-label="Next" style="
+   pointer-events: none;
+   cursor: default;
+   color:grey;">
+      <% else %>
+      <a href="?page=<%= @page + 1 %>" aria-label="Next">
+      <% end %>
+        <span aria-hidden="true">&raquo;</span>
+      </a>
+    </li>
+  </ul>
+</nav>
+</div>
 <hr>
 <%if !session[:user_id].nil? %>
 <div class="container">
@@ -87,6 +148,25 @@
   <input class="form-control" type="text" name="title" placeholder="Title">
   <label>Content:</label>
   <textarea class="form-control" cols="80" name="content"></textarea>
+  <label>Minimum level to comment this post:</label>
+  <select class="form-control" name="level">
+        <option>0</option>
+        <option>1</option>
+        <option>2</option>
+        <option>3</option>
+        <option>4</option>
+        <option>5</option>
+        <option>6</option>
+        <option>7</option>
+        <option>8</option>
+        <option>9</option>
+        <option>10</option>
+        <option>11</option>
+        <option>12</option>
+        <option>13</option>
+        <option>14</option>
+        <option>15</option>
+      </select>
   <br>
   <input name="top" type="hidden" value="false"></input>
   <input name="important" type="hidden" value="false"></input>
@@ -95,3 +175,20 @@
 <% end %>
 </div>
 <% end %>
+<script>
+
+      $(function(){
+        $('#all').on('click',function(){  
+          $('.formal').show();
+        });
+
+        $('#important').on('click',function(){
+          $('.formal').hide();
+        });
+
+        
+      });
+      
+
+
+    </script>

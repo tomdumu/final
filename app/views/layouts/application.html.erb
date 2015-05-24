@@ -34,7 +34,7 @@
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
             <% if session[:user_id].present? %>
-              <li><%= link_to "Users Followed", "/users?follow=#{session[:user_id]}" %></li>
+              <li><%= link_to "Leaders", "/users?follow=#{session[:user_id]}" %></li>
               <li><%= link_to "Forums Watched", "/forums?watch=#{session[:user_id]}" %></li>
               <li><%= link_to "Posts Liked", "/posts?like=#{session[:user_id]}" %></li>
               <li class="dropdown">
@@ -47,9 +47,9 @@
               <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">Popular <span class="caret"></span></a>
               <ul class="dropdown-menu">
-                <li><a href="#">Popular Posts</a></li>
-                <li><a href="#">Popular Forums</a></li>
-                <li><a href="#">Popular Users</a></li>
+                <li><%= link_to "Popular Posts", "/posts?popular=true" %></li>
+                <li><%= link_to "Popular Forums", "/forums?popular=true" %></li>
+                <li><%= link_to "Popular Users", "/users?popular=true" %></li>
               </ul>
             </li>
             <% end %>
@@ -89,14 +89,14 @@
   <div class="container" style="margin-top: 60px;">
 
     <% if notice.present? %>
-      <div class="alert alert-info"%>
+      <div class="alert alert-danger"%>
         <%= notice %>
       </div>
     <% end %>
 
     <% if session[:user_id].nil? %>
-      <div class="well">
-        <p align="middle" style="color:red;">Login to Create Your Own Forum!</p>
+      <div class="well well-sm">
+        <p align="middle" style="color:red;margin-bottom:-1px;">Login to Create Your Own Forum!</p>
       </div>
     <% end %>
 
