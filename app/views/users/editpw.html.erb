@@ -20,6 +20,7 @@
   <input type="hidden" name="real_name" value='<%= @user.real_name %>'>
   <input type="hidden" name="address" placeholder="address" value='<%= @user.address %>'>
   <input type="hidden" name="birthday" value='<%= @user.birthday.to_date %>'>
+  <input type="hidden" class="form-control" name="updatepw" value='true'>
   <br>
   <input type="submit" class="btn btn-primary" value="Submit">
 <% end %>

@@ -5,6 +5,7 @@ class SessionsController < ApplicationController
     end
     user = User.find_by(user_name: params[:user_name])
     if user
+      #if user.authenticate(params[:password])
       if user.password == params[:password]
         #cookies["user_id"] = user.id
         session[:user_id] = user.id

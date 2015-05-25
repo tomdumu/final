@@ -20,6 +20,18 @@ User.create(user_name: 'God Liang', password: 'z', level: 1, birthday: '1990-11-
 
 Forum.create(forum_name: 'Academy', description: 'A forum allowing you to post acadamy-related questions and discussions', admin_id: 3)
 Forum.create(forum_name: 'Job Board', description: 'New Jobs will be posted here.', admin_id: 2)
+Forum.create(forum_name: 'Job Boar12d', description: 'New Jobs will be posted here.', admin_id: 2)
+Forum.create(forum_name: 'Job Boar123d', description: 'New Jobs will be posted here.', admin_id: 2)
+Forum.create(forum_name: 'Job Board2', description: 'New Jobs will be posted here.', admin_id: 2)
+Forum.create(forum_name: 'Job Board3', description: 'New Jobs will be posted here.', admin_id: 2)
+Forum.create(forum_name: 'Job Board4', description: 'New Jobs will be posted here.', admin_id: 2)
+Forum.create(forum_name: 'Job Board5', description: 'New Jobs will be posted here.', admin_id: 2)
+Forum.create(forum_name: 'Job Board6', description: 'New Jobs will be posted here.', admin_id: 2)
+Forum.create(forum_name: 'Job Board7', description: 'New Jobs will be posted here.', admin_id: 2)
+Forum.create(forum_name: 'Job Board88', description: 'New Jobs will be posted here.', admin_id: 2)
+Forum.create(forum_name: 'Job Board8', description: 'New Jobs will be posted here.', admin_id: 2)
+Forum.create(forum_name: 'Job Board9', description: 'New Jobs will be posted here.', admin_id: 2)
+Forum.create(forum_name: 'Job Board00', description: 'New Jobs will be posted here.', admin_id: 2)
 
 
 Post.create(forum_id: 1, title: 'Monday Office Hours', content: 'I hope everyone is having a great start to the week.', date: '2015-03-04 10:20:00', top: false, important: true, poster_id: 3)

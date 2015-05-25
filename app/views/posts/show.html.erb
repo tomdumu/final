@@ -1,4 +1,12 @@
 
+<% $url = request.url
+         if $url.include? "?"
+          $plus = "&"
+         else
+          $plus = "?"
+        end
+
+       %>
 <div class="panel panel-default">
   <div class="panel-heading" align="middle">
     <%= link_to Forum.find_by_id(@post.forum_id).forum_name, forum_url(@post.forum_id) %>
@@ -47,7 +55,11 @@
     </div>
   </div>  
   <% if !@comments.nil? %>
-    <% @comments.each do |comment| %>
+  <% (@page.to_i*10..@page.to_i*10+9).each do |i| 
+    comment = @comments[i]
+    if comment.nil?
+      break
+    end %>
     <div class="panel-body">
     <hr>
     <div class="row">
@@ -76,6 +88,46 @@
 
   <% end %>
   <% end %>
+</div>
+  <div>
+  <nav align="middle">
+  <ul class="pagination">
+    <li>
+      <% if @page == 0 %>
+      <a href="#" aria-label="Previous" style="
+   pointer-events: none;
+   cursor: default;
+   color:grey;">
+      <% else %>
+      <a href="<%= request.url+$plus %>page=<%= @page - 1 %>" aria-label="Previous">
+      <% end %>
+        <span aria-hidden="true">&laquo;</span>
+      </a>
+    </li>
+    <% if @comments.length%10 == 0
+        $count = @comments.length/10
+       else
+        $count = @comments.length/10 + 1
+       end
+       (1..$count).each do |i|
+         %> 
+
+    <li><a href="<%= request.url+$plus %>page=<%= i-1 %>" id="page"><%= i %></a></li>
+    <% end %>
+  <li>
+      <% if @page == $count - 1 %>
+      <a href="#" aria-label="Next" style="
+   pointer-events: none;
+   cursor: default;
+   color:grey;">
+      <% else %>
+      <a href="<%= request.url+$plus %>page=<%= @page + 1 %>" aria-label="Next">
+      <% end %>
+        <span aria-hidden="true">&raquo;</span>
+      </a>
+    </li>
+  </ul>
+</nav>
 </div>
 <%if !session[:user_id].nil? %>
 <div class="container">

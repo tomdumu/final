@@ -1,4 +1,12 @@
 <html>
+<% $url = request.url
+         if $url.include? "?"
+          $plus = "&"
+         else
+          $plus = "?"
+        end
+
+       %>
 <% if !session[:user_id].nil? %>
 <div class="panel panel-default">
   <div class="panel-heading" align="middle">
@@ -28,7 +36,11 @@
   <% end %>
 <% end %>
   <br>
-  <% @forums.each do |forum| %>
+  <% (@page.to_i*10..@page.to_i*10+9).each do |i| 
+    forum = @forums[i]
+    if forum.nil?
+      break
+    end %>
   <div class="panel panel-default">
     <div class="panel-heading">
       <%= link_to forum.forum_name, forum_url(forum.id)%>
@@ -58,5 +70,45 @@
     </div>
   </div>
   <% end %>
+  <div>
+  <nav align="middle">
+  <ul class="pagination">
+    <li>
+      <% if @page == 0 %>
+      <a href="#" aria-label="Previous" style="
+   pointer-events: none;
+   cursor: default;
+   color:grey;">
+      <% else %>
+      <a href="<%= request.url+$plus %>page=<%= @page - 1 %>" aria-label="Previous">
+      <% end %>
+        <span aria-hidden="true">&laquo;</span>
+      </a>
+    </li>
+    <% if @forums.length%10 == 0
+        $count = @forums.length/10
+       else
+        $count = @forums.length/10 + 1
+       end
+       (1..$count).each do |i|
+         %> 
+
+    <li><a href="<%= request.url+$plus %>page=<%= i-1 %>" id="page"><%= i %></a></li>
+    <% end %>
+  <li>
+      <% if @page == $count - 1 %>
+      <a href="#" aria-label="Next" style="
+   pointer-events: none;
+   cursor: default;
+   color:grey;">
+      <% else %>
+      <a href="<%= request.url+$plus %>page=<%= @page + 1 %>" aria-label="Next">
+      <% end %>
+        <span aria-hidden="true">&raquo;</span>
+      </a>
+    </li>
+  </ul>
+</nav>
+</div>
 
 </html>

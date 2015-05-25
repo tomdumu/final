@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 0) do
+ActiveRecord::Schema.define(version: 20150524223536) do
 
   create_table "comments", force: :cascade do |t|
     t.integer  "post_id"
@@ -55,6 +55,7 @@ ActiveRecord::Schema.define(version: 0) do
     t.boolean  "important", default: false
     t.integer  "forum_id"
     t.integer  "poster_id"
+    t.integer  "level"
   end
 
   add_index "posts", ["forum_id"], name: "index_posts_on_forum_id"
@@ -62,13 +63,14 @@ ActiveRecord::Schema.define(version: 0) do
 
   create_table "users", force: :cascade do |t|
     t.string   "user_name"
-    t.string   "password"
     t.float    "level"
     t.datetime "birthday"
     t.string   "real_name"
     t.string   "address"
     t.string   "email"
     t.string   "gender"
+    t.string   "avatar"
+    t.string   "password"
   end
 
   create_table "watches", force: :cascade do |t|

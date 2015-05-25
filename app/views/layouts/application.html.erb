@@ -44,17 +44,9 @@
                 <li><%= link_to "My Forums", "/forums?user_id=#{session[:user_id]}" %></li>
               </ul>
             </li>
-              <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Popular <span class="caret"></span></a>
-              <ul class="dropdown-menu">
-                <li><%= link_to "Popular Posts", "/posts?popular=true" %></li>
-                <li><%= link_to "Popular Forums", "/forums?popular=true" %></li>
-                <li><%= link_to "Popular Users", "/users?popular=true" %></li>
-              </ul>
-            </li>
             <% end %>
           </ul>
-          <ul class="nav navbar-nav pull-right">
+          <ul class="nav navbar-nav navbar-right">
             <% if session[:user_id].present? %>
             <li>
               <%= form_tag users_url, method: "get", :class=>"form-inline", :role=>"form", :style=>"margin-top:8px;" do %>
@@ -69,9 +61,10 @@
                 <li><%= link_to "Edit Profile", user_edit_url(session[:user_id]) %></li>
                 <li><%= link_to "Change password", user_editpw_url(session[:user_id]) %></li>
                 <li><%= link_to "Delete this account", user_url(session[:user_id]), method: "delete" %></li>
+                <li class="divider"></li>
+              <li><%= link_to "Sign Out", signout_url %></li>
               </ul>
             </li>
-              <li><%= link_to "Sign Out", signout_url %></li>
             <% else %>
               <li><%= link_to "Sign Up", signup_url %></li>
               <li><%= form_tag sessions_url, :method => 'post', :class=>"form-inline", :role=>"form", :style=>"margin-top:8px;" do %>
@@ -81,6 +74,7 @@
                 <% end %>
               </li>
             <% end %>
+              <li><a data-toggle="modal" data-target="#myModal">Instructions</a></li>
           </ul>
         </div>
       </div>
@@ -118,4 +112,50 @@
 @2015 Mu Du&Jiaming Dong All rights reserved.</p>
 </footer>
 
+<!-- Modal -->
+<div class="modal fade bs-example-modal-lg" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Instructions for Super Forum</h4>
+      </div>
+      <div class="modal-body">
+        <ul>
+          <label class="h2">Functions:</label>
+          <li>Sign in/out</li>
+          <li>Create/Manage Your Own Forums.</li>
+          <li>Search Users/Forums/Posts.</li>
+          <li>Manage Your Profiles.</li>
+          <li>Add Posts in a Forum.</li>
+          <li>Comment the Posts.</li>
+          <li>Follow/Unfollow.</li>
+          <li>Watch/Unwatch Forums.</li>
+          <li>Like/Unlike Forums.</li>
+          <li>Other Attractive Features Waiting For You to Find Out!</li>
+          <h2>Contact:</h2>
+          MuDu@uchicago.edu <br>
+          jiamingd@uchicago.edu
+        </ul>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 </html>
+<script>
+
+      $(function(){
+        $('#about').on('click',function(){  
+
+        });
+
+        
+      });
+      
+
+
+    </script>

@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+
   def index
     if params[:search].present?
       @users = User.where("user_name LIKE '%#{params["search"]}%'")
@@ -48,20 +49,22 @@ class UsersController < ApplicationController
 
   def update
     @user = User.find(params[:id])
+    @updatepw = params[:updatepw]
     @pw1 = params[:pw1]
     @pw2 = params[:pw2]
-    if @pw1.nil? || @pw2.nil? || @pw1.length < 1 || @pw2.length < 1
-      redirect_to user_url(@user.id), notice: "Failed! Invalid password"
-    elsif @pw1 != @pw2
+    if @updatepw == "false"
+      @user.real_name = params[:real_name]
+      @user.address = params[:address]
+      @user.email = params[:email]
+      @user.birthday = params[:birthday].to_date
+      @user.save
+      redirect_to user_url(@user.id), notice: "Change profile successfully"
+    elsif @pw1.nil? || @pw2.nil? || @pw1 != @pw2
       redirect_to user_url(@user.id), notice: "Failed! Re-enter password not match"      
     else
-    @user.update real_name: params[:real_name],
-    address: params[:address],
-    email: params[:email],
-    password: params[:pw1],
-    birthday: params[:birthday].to_date
-
-    redirect_to user_url(@user.id), notice: "Change successfully"
+      @user.password = params[:pw1]
+      @user.save
+      redirect_to user_url(@user.id), notice: "Change password successfully"
     end
   end
 

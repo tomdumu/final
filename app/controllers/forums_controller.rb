@@ -1,5 +1,9 @@
 class ForumsController < ApplicationController
 	def index
+    @page = params[:page].to_i
+    if @page.nil?
+      @page = 0
+    end
     if params[:search].present?
       @forums = Forum.where("forum_name LIKE ?", "%#{params["search"]}%")
     elsif params[:user_id].present?

@@ -17,6 +17,10 @@ class PostsController < ApplicationController
   end
 
   def show
+    @page = params[:page].to_i
+    if @page.nil?
+      @page = 0
+    end
     @post = Post.find(params[:id])
     @comments = Comment.where(post_id: @post.id).order('date')  
   end
