@@ -18,6 +18,12 @@
     }
   </style>
 </head>
+<% if session[:user_id].present? 
+     if User.find_by_id(session[:user_id]).nil?
+       session[:user_id] = nil; 
+
+     end 
+   end %>
 
 <body>
   <nav class="navbar navbar-inverse navbar-fixed-top">
