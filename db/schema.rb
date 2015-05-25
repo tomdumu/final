@@ -69,7 +69,7 @@ ActiveRecord::Schema.define(version: 20150524223536) do
     t.string   "address"
     t.string   "email"
     t.string   "gender"
-    t.string   "avatar"
+    t.text     "avatar"
     t.string   "password"
   end
 

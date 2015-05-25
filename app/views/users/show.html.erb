@@ -6,17 +6,19 @@
           <% if Follow.where(follower_id: session[:user_id]).pluck(:leader_id).include? @user.id %>
           <%= form_tag follow_url(@user.id), method: "delete", :class => "form pull-right" do%>
               <input type="hidden" name="url" value=<%= request.url %>>
-              <%= submit_tag "Unfollow", :class=>"btn btn-sm btn-danger pull-right"%>
+              <%= submit_tag "Unfollow", :class=>"btn btn-sm btn-danger pull-right", :style => "margin-top:-4px;"%>
             <% end %> 
           <% else %>
                 <%= form_tag follow_url(@user.id), method: "post", :class => "form pull-right" do%>
               <input type="hidden" name="url" value=<%= request.url %>>
-              <%= submit_tag "Follow", :class=>"btn btn-sm btn-primary pull-right"%>
+              <%= submit_tag "Follow", :class=>"btn btn-sm btn-primary pull-right", :style => "margin-top:-4px;"%>
             <% end %>            
           <% end %>
           <% end %>
   </div>
   <div class="panel-body">
+    <div class="row">
+      <div class="col-sm-6">
   	<ul class="list-group">
       <li class="list-group-item"><label>Username:</label> <%= @user.user_name %></li>
       <li class="list-group-item"><label>level: </label> <%= @user.level.to_i %></li>
@@ -26,6 +28,11 @@
       <li class="list-group-item"><label>Address: </label> <%= @user.address %></li>
       <li class="list-group-item"><label>Email: </label> <%= @user.email %></li>
     </ul>
+  </div>
+    <div class="col-sm-6" align="middle">
+        <img src="<%= @user.avatar %>" height="300" width="300" ></img>
+    </div>
+  </div>
     <table class="table table-striped" align="middle">
       <thead>
       	<tr>

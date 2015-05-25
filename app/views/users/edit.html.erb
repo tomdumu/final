@@ -18,6 +18,8 @@
   <input class="form-control" type="text" name="real_name" placeholder="real name" value='<%= @user.real_name %>'>
   <label>Address:</label>
   <input class="form-control" type="text" name="address" placeholder="address" value='<%= @user.address %>'>
+  <label>Avatar URL:</label>
+  <input class="form-control" type="text" name="avatar" placeholder="avatar-URL" value='<%= @user.avatar %>'>
   <label>Birthday:</label>
   <input type="date" class="form-control" name="birthday" value='<%= @user.birthday.to_date %>'>
   <input type="hidden" class="form-control" name="updatepw" value='false'>

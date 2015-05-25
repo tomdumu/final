@@ -7,7 +7,7 @@ User
   address
   email
   gender
-  avatar
+  avatar: text
 
 Post
   forum_id: integer

@@ -9,7 +9,11 @@
     </thead>
     <tbody>
       <% if !@users.nil? %>
-        <% @users.each do |user| %>
+      <% (@page.to_i*10..@page.to_i*10+9).each do |i| 
+    user = @users[i]
+    if user.nil?
+      break
+    end %>
           <tr>
             <td><%= link_to user.user_name, user_url(user.id) %></td>
             <td><%= user.real_name %></td>
@@ -33,3 +37,43 @@
     </tbody>
   </table>
 <% end %>
+<div>
+  <nav align="middle">
+  <ul class="pagination">
+    <li>
+      <% if @page == 0 %>
+      <a href="#" aria-label="Previous" style="
+   pointer-events: none;
+   cursor: default;
+   color:grey;">
+      <% else %>
+      <a href="<%= request.url+$plus %>page=<%= @page - 1 %>" aria-label="Previous">
+      <% end %>
+        <span aria-hidden="true">&laquo;</span>
+      </a>
+    </li>
+    <% if @users.length%10 == 0
+        $count = @users.length/10
+       else
+        $count = @users.length/10 + 1
+       end
+       (1..$count).each do |i|
+         %> 
+
+    <li><a href="<%= request.url+$plus %>page=<%= i-1 %>" id="page"><%= i %></a></li>
+    <% end %>
+  <li>
+      <% if @page == $count - 1 %>
+      <a href="#" aria-label="Next" style="
+   pointer-events: none;
+   cursor: default;
+   color:grey;">
+      <% else %>
+      <a href="<%= request.url+$plus %>page=<%= @page + 1 %>" aria-label="Next">
+      <% end %>
+        <span aria-hidden="true">&raquo;</span>
+      </a>
+    </li>
+  </ul>
+</nav>
+</div>

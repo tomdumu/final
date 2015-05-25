@@ -1,4 +1,12 @@
 <h3>Sign Up</h3>
+<% $url = request.url
+         if $url.include? "?"
+          $plus = "&"
+         else
+          $plus = "?"
+        end
+
+       %>
 <% if @user.errors.any? %>
   <ul class="errors">
       <div class="alert alert-info"%>
@@ -22,6 +30,8 @@
   <input class="form-control" type="text" name="address" placeholder="address">
   <label>Birthday:</label>
   <input type="date" class="form-control", name="date">
+  <label>Avatar URL:</label>
+  <input class="form-control" type="text" name="avatar" placeholder="avatar-URL" >
   <label>Gender:</label><p>
   <input type="radio" name="gender" value="male" > Male
   <input type="radio" name="gender" value="female"> Female<br><br>

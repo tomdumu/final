@@ -19,12 +19,12 @@
           <% if Watch.where(user_id: session[:user_id]).pluck(:forum_id).include? @forum.id %>
             <%= form_tag  watch_url(@forum.id), method: "delete", :class => "form pull-right" do%>
               <input type="hidden" name="url" value=<%= request.url %>>
-            <%= submit_tag "Unwatch", :class=>"btn btn-sm btn-danger pull-right"%>
+            <%= submit_tag "Unwatch", :class=>"btn btn-sm btn-danger pull-right", :style => "margin-top:-4px;"%>
           <% end %>
           <% else %>
             <%= form_tag  watch_url(@forum.id), method: "post", :class => "form pull-right" do%>
               <input type="hidden" name="url" value=<%= request.url %>>
-            <%= submit_tag "Watch", :class=>"btn btn-sm btn-primary pull-right"%>
+            <%= submit_tag "Watch", :class=>"btn btn-sm btn-primary pull-right", :style => "margin-top:-4px;"%>
           <% end %>          
           <% end %>
   </div>

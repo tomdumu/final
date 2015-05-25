@@ -1,6 +1,10 @@
 class UsersController < ApplicationController
 
   def index
+    @page = params[:page].to_i
+    if @page.nil?
+      @page = 0
+    end
     if params[:search].present?
       @users = User.where("user_name LIKE '%#{params["search"]}%'")
     elsif params[:follow].present?
@@ -26,7 +30,8 @@ class UsersController < ApplicationController
       real_name: params[:real_name], 
       address: params[:address], 
       email: params[:email], 
-      gender: params[:gender])
+      gender: params[:gender],
+      avatar: params[:avatar])
 
     if @user.save
       redirect_to root_url, notice: "Thanks for signing up!"
@@ -57,6 +62,7 @@ class UsersController < ApplicationController
       @user.address = params[:address]
       @user.email = params[:email]
       @user.birthday = params[:birthday].to_date
+      @user.avatar = params[:avatar]
       @user.save
       redirect_to user_url(@user.id), notice: "Change profile successfully"
     elsif @pw1.nil? || @pw2.nil? || @pw1 != @pw2
