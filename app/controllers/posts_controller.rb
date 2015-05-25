@@ -35,10 +35,11 @@ class PostsController < ApplicationController
                  important: params[:important] == "true",
                  poster_id: session[:user_id])
     @user = User.find_by_id(session[:user_id])
-    @level = @user.level
+    @x = Level.find_by(user_id: @user.id)
+    @level = @x.level
     @level = @level + 0.7/(@level+1)
-    @user.update level: @level
-    @user.save
+    @x.update level: @level
+    @x.save
 
     if @post.save
       redirect_to post_url(@post.id), notice: "Post Created."

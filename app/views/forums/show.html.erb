@@ -101,13 +101,11 @@
   <div>
   <nav align="middle">
   <ul class="pagination">
-    <li>
       <% if @page == 0 %>
-      <a href="#" aria-label="Previous" style="
-   pointer-events: none;
-   cursor: default;
-   color:grey;">
+    <li class="disabled">
+      <a href="#" aria-label="Previous">
       <% else %>
+      <li>
       <a href="?page=<%= @page - 1 %>" aria-label="Previous">
       <% end %>
         <span aria-hidden="true">&laquo;</span>
@@ -123,13 +121,11 @@
 
     <li><a href="?page=<%= i-1 %>" id="page"><%= i %></a></li>
     <% end %>
-  <li>
-      <% if @page == $count - 1 %>
-      <a href="#" aria-label="Next" style="
-   pointer-events: none;
-   cursor: default;
-   color:grey;">
+      <% if @page >= $count - 1 %>
+  <li class="disabled">
+      <a href="#" aria-label="Next">
       <% else %>
+  <li>
       <a href="?page=<%= @page + 1 %>" aria-label="Next">
       <% end %>
         <span aria-hidden="true">&raquo;</span>

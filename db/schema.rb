@@ -39,6 +39,13 @@ ActiveRecord::Schema.define(version: 20150524223536) do
 
   add_index "forums", ["admin_id"], name: "index_forums_on_admin_id"
 
+  create_table "levels", force: :cascade do |t|
+    t.integer "user_id"
+    t.float   "level"
+  end
+
+  add_index "levels", ["user_id"], name: "index_levels_on_user_id"
+
   create_table "likes", force: :cascade do |t|
     t.integer "post_id"
     t.integer "user_id"
@@ -63,14 +70,13 @@ ActiveRecord::Schema.define(version: 20150524223536) do
 
   create_table "users", force: :cascade do |t|
     t.string   "user_name"
-    t.float    "level"
     t.datetime "birthday"
     t.string   "real_name"
     t.string   "address"
     t.string   "email"
     t.string   "gender"
     t.text     "avatar"
-    t.string   "password"
+    t.string   "password_digest"
   end
 
   create_table "watches", force: :cascade do |t|

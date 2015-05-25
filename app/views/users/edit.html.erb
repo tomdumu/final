@@ -22,6 +22,8 @@
   <input class="form-control" type="text" name="avatar" placeholder="avatar-URL" value='<%= @user.avatar %>'>
   <label>Birthday:</label>
   <input type="date" class="form-control" name="birthday" value='<%= @user.birthday.to_date %>'>
+  <label>Enter&nbsp;password&nbsp;to&nbsp;change&nbsp;your&nbsp;profile:</label>
+  <input type="password" class="form-control" name="password" placeholder="password">
   <input type="hidden" class="form-control" name="updatepw" value='false'>
   <br>
   <input type="submit" class="btn btn-primary" value="Submit">

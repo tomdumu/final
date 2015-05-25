@@ -1,8 +1,11 @@
-
-<% $url = request.url
-         if $url.include? "?"
+<% $pos = request.url.split(/[&]?page=[\d]/)
+      $url = $pos[0]
+      $para = $url.split("?")
+         if ($url.include? "?") && $para[1].present?
           $plus = "&"
-         else
+         elsif $url.include? "?"
+          $plus = ""
+        else
           $plus = "?"
         end
 
@@ -43,10 +46,10 @@
         <img src="<%= User.find_by_id(@post.poster_id).avatar %>" height="100" width="100" ></img><br>
         <%= link_to User.find_by_id(@post.poster_id).user_name, user_url(@post.poster_id) %>
         <br>
-        <label>Level: <%= User.find_by_id(@post.poster_id).level.to_i %></label>
+        <label>Level: <%= Level.find_by(user_id: @post.poster_id).level.to_i %></label>
         <div class="progress">
-    <div class="progress-bar" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width:<%= ((User.find_by_id(@post.poster_id).level - User.find_by_id(@post.poster_id).level.to_i) * 100).to_i%>%">
-      <%= ((User.find_by_id(@post.poster_id).level - User.find_by_id(@post.poster_id).level.to_i) * 100).to_i%>%
+    <div class="progress-bar" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width:<%= ((Level.find_by(user_id: @post.poster_id).level - Level.find_by(user_id: @post.poster_id).level.to_i) * 100).to_i%>%">
+      <%= ((Level.find_by(user_id: @post.poster_id).level - Level.find_by(user_id: @post.poster_id).level.to_i) * 100).to_i%>%
     </div>
   </div>
       </div>
@@ -70,10 +73,10 @@
       <div class="col-sm-2">
         <img src="<%= User.find_by_id(comment.commenter_id).avatar %>" height="100" width="100" ></img><br>
         <%= link_to User.find_by_id(comment.commenter_id).user_name, user_url(comment.commenter_id) %><br>
-        <label>Level: <%= User.find_by_id(comment.commenter_id).level.to_i %></label>
+        <label>Level: <%= Level.find_by(user_id: comment.commenter_id).level.to_i %></label>
         <div class="progress">
-    <div class="progress-bar" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width:<%= ((User.find_by_id(comment.commenter_id).level - User.find_by_id(comment.commenter_id).level.to_i) * 100).to_i%>%">
-      <%= ((User.find_by_id(comment.commenter_id).level - User.find_by_id(comment.commenter_id).level.to_i) * 100).to_i%>%
+    <div class="progress-bar" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width:<%= ((Level.find_by(user_id: comment.commenter_id).level - Level.find_by(user_id: comment.commenter_id).level.to_i) * 100).to_i%>%">
+      <%= ((Level.find_by(user_id: comment.commenter_id).level - Level.find_by(user_id: comment.commenter_id).level.to_i) * 100).to_i%>%
     </div>
   </div>
       </div>
@@ -97,14 +100,12 @@
   <div>
   <nav align="middle">
   <ul class="pagination">
-    <li>
       <% if @page == 0 %>
-      <a href="#" aria-label="Previous" style="
-   pointer-events: none;
-   cursor: default;
-   color:grey;">
+    <li class="disabled">
+      <a href="#" aria-label="Previous">
       <% else %>
-      <a href="<%= request.url+$plus %>page=<%= @page - 1 %>" aria-label="Previous">
+    <li>
+      <a href="<%= $url+$plus %>page=<%= @page - 1 %>" aria-label="Previous">
       <% end %>
         <span aria-hidden="true">&laquo;</span>
       </a>
@@ -117,16 +118,14 @@
        (1..$count).each do |i|
          %> 
 
-    <li><a href="<%= request.url+$plus %>page=<%= i-1 %>" id="page"><%= i %></a></li>
+    <li><a href="<%= $url+$plus %>page=<%= i-1 %>" id="page"><%= i %></a></li>
     <% end %>
-  <li>
-      <% if @page == $count - 1 %>
-      <a href="#" aria-label="Next" style="
-   pointer-events: none;
-   cursor: default;
-   color:grey;">
+      <% if @page >= $count - 1 %>
+  <li class="disabled">
+      <a href="#" aria-label="Next">
       <% else %>
-      <a href="<%= request.url+$plus %>page=<%= @page + 1 %>" aria-label="Next">
+  <li>
+      <a href="<%= $url+$plus %>page=<%= @page + 1 %>" aria-label="Next">
       <% end %>
         <span aria-hidden="true">&raquo;</span>
       </a>

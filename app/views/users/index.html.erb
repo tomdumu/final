@@ -1,3 +1,15 @@
+  <% $pos = request.url.split(/[&]?page=[\d]/)
+      $url = $pos[0]
+      $para = $url.split("?")
+         if ($url.include? "?") && $para[1].present?
+          $plus = "&"
+         elsif $url.include? "?"
+          $plus = ""
+        else
+          $plus = "?"
+        end
+
+       %>
   <table class="table">
     <thead>
       <tr>
@@ -40,14 +52,12 @@
 <div>
   <nav align="middle">
   <ul class="pagination">
-    <li>
       <% if @page == 0 %>
-      <a href="#" aria-label="Previous" style="
-   pointer-events: none;
-   cursor: default;
-   color:grey;">
+    <li class="disabled">
+      <a href="#" aria-label="Previous">
       <% else %>
-      <a href="<%= request.url+$plus %>page=<%= @page - 1 %>" aria-label="Previous">
+    <li>
+      <a href="<%= $url+$plus %>page=<%= @page - 1 %>" aria-label="Previous">
       <% end %>
         <span aria-hidden="true">&laquo;</span>
       </a>
@@ -60,16 +70,14 @@
        (1..$count).each do |i|
          %> 
 
-    <li><a href="<%= request.url+$plus %>page=<%= i-1 %>" id="page"><%= i %></a></li>
+    <li><a href="<%= $url+$plus %>page=<%= i-1 %>" id="page"><%= i %></a></li>
     <% end %>
-  <li>
-      <% if @page == $count - 1 %>
-      <a href="#" aria-label="Next" style="
-   pointer-events: none;
-   cursor: default;
-   color:grey;">
+      <% if @page >= $count - 1 %>
+  <li class="disabled">
+      <a href="#" aria-label="Next">
       <% else %>
-      <a href="<%= request.url+$plus %>page=<%= @page + 1 %>" aria-label="Next">
+  <li>
+      <a href="<%= $url+$plus %>page=<%= @page + 1 %>" aria-label="Next">
       <% end %>
         <span aria-hidden="true">&raquo;</span>
       </a>

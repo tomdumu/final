@@ -16,17 +16,19 @@ class CommentsController < ApplicationController
     @user = User.find_by_id(@comment.commenter_id)
     @post = Post.find_by_id(@comment.post_id)
     @poster = User.find_by_id(@post.poster_id)
-    @level = @user.level
+    @x = Level.find_by(user_id: @user.id)
+    @level = @x.level
     if @level <= 15 && @comment.commenter_id != @poster.id
       @level = @level + 0.5/(@level+1)
-      @user.update level: @level
-      @user.save
+      @x.update level: @level
+      @x.save
     end
-    @level1 = @poster.level
+    @x1 = Level.find_by(user_id: @poster.id)
+    @level1 = @x1.level
     if @level1 <= 15 && @comment.commenter_id != @poster.id
       @level1 = @level1 + 0.9/(@level1+1)
-      @poster.update level: @level1
-      @poster.save
+      @x1.update level: @level1
+      @x1.save
     end
 
     if @comment.save

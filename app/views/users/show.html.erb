@@ -21,7 +21,7 @@
       <div class="col-sm-6">
   	<ul class="list-group">
       <li class="list-group-item"><label>Username:</label> <%= @user.user_name %></li>
-      <li class="list-group-item"><label>level: </label> <%= @user.level.to_i %></li>
+      <li class="list-group-item"><label>level: </label> <%= Level.find_by(user_id: @user.id).level.to_i %></li>
       <li class="list-group-item"><label>Gender: </label> <%= @user.gender %></li>
       <li class="list-group-item"><label>Birthday: </label> <%= @user.birthday.to_date %></li>
       <li class="list-group-item"><label>Real name:</label> <%= @user.real_name %></li>

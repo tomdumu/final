@@ -1,7 +1,6 @@
 User
   user_name
-  password
-  level: double
+  password_digest
   birthday: datetime
   real_name
   address
@@ -41,4 +40,8 @@ Watch
 Like
   user_id: integer
   post_id: integet
+
+Level
+  user_id: integer
+  level: double
 
